@@ -1,26 +1,27 @@
-import express from 'express'
-import * as dotenv from 'dotenv'
-import cors from 'cors'
-import { Configuration, OpenAIApi } from 'openai'
+import express from 'express';
+import * as dotenv from 'dotenv';
+import cors from 'cors';
+import { Configuration, OpenAIApi } from 'openai';
 
-dotenv.config()
+dotenv.config();
 
+console.log(process.env.OPENAI_API_KEY)
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.get('/', async (req, res) => {
     res.status(200).send({
       message: 'Hello from CodeGPT!'
     })
-  })
+  });
 
   app.post('/', async (req, res) => {
     try {
@@ -41,7 +42,7 @@ app.get('/', async (req, res) => {
       });
   
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).send({ error });
     }
   })
